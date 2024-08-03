@@ -15,6 +15,5 @@ class Deposit(Base):
     date = Column(Date)
     amount = Column(Float)
 
-
 def create_tables():
     Base.metadata.create_all(bind=engine)

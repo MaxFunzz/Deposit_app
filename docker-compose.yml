@@ -1,30 +1,3 @@
-#version: "3.9"
-#
-#services:
-#  app:
-#    container_name: deposit_app
-#    build: ./
-#    depends_on:
-#      - db
-#    command: bash -c 'while !</dev/tcp/db/5432; do sleep 1; done; uvicorn deposit_app.main:app --host 0.0.0.0 --port 8000'
-#    volumes:
-#      - ./deposit_app:/app
-#    ports:
-#      - "8000:8000"
-#    restart: always
-#
-#  db:
-#    container_name: deposit_app_postgres
-#    image: postgres:latest
-#    environment:
-#      POSTGRES_USER: postgres
-#      POSTGRES_PASSWORD: mysecretpassword
-#      POSTGRES_DB: deposit_database
-#    ports:
-#      - "5432:5432"
-#    volumes:
-#      - ./postgres:/var/lib/postgresql/data
-#    restart: always
 version: "3.9"
 
 services:
@@ -34,9 +7,11 @@ services:
     depends_on:
       - db
     volumes:
-      - ./deposit_app:/app/deposit_app  # Монтируем директорию с кодом в контейнер
+      - ./deposit_app:/app/deposit_app
     ports:
       - "8000:8000"
+    environment:
+      DATABASE_URL: postgresql://postgres:mysecretpassword@db/deposit_database
     restart: always
 
   db:

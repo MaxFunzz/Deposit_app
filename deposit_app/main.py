@@ -44,6 +44,8 @@ def get_calculation(params: DepositParams = Depends(), db: Session = Depends(get
     for _ in range(params.periods):
         params.amount *= (1 + (params.rate / 100) / 12)
 
+        params.amount = round(params.amount, 2)
+
         last_day_of_current_month = get_last_day_of_month(current_date)
 
         formatted_date = last_day_of_current_month.strftime("%d.%m.%Y")
